@@ -235,10 +235,8 @@
 				    	<th></th>	
 					</tr>
 				    <?php 
-				    if(mysql_fetch_array($sqlSongName) == false){ ?>
-				    	<div class="alert alert-warning" role="alert">Nothing found</div>
-				    <?php }
-				    while($rowSongName = mysql_fetch_array($sqlSongName)) { ?>
+				    $check1 = 0;
+				    while($rowSongName = mysql_fetch_array($sqlSongName)) { $check1 = 1;?>
 					    <tr>
 					        <td><?php echo $rowSongName['ArtistArtist']; ?></td>
 					        <td><?php echo ucwords($rowSongName['SongName']); ?></td>
@@ -247,17 +245,18 @@
 							</span>
 							</a></div></td>
 			      		</tr>
-			      <?php } ?>
+			      <?php } 
+			      if($check1==0){ ?>
+				    	<div class="alert alert-warning" role="alert">Nothing found</div>
+				    <?php }?>
 			    </table>
 			<?php } ?>
 			<?php if (isset($_GET["nameOfArtistSearch"])){?>
 				<h3></h3>
 				<table class="table table-striped">
 				     <?php 
-				    if(mysql_fetch_array($sqlArtistName) == false){ ?>
-				    	<div class="alert alert-warning" role="alert">Nothing found</div>
-				    <?php }
-				     while($rowArtistName = mysql_fetch_array($sqlArtistName)) { ?>
+				    $check2 = 0;
+				     while($rowArtistName = mysql_fetch_array($sqlArtistName)) { $check2 = 1;?>
 					    <tr>
 					        <td><?php echo $rowArtistName['ArtistArtist']; ?></td>
 					        <td><?php echo ucwords($rowArtistName['SongName']); ?></td>
@@ -266,7 +265,10 @@
 							</span>
 							</a></div></td>
 			      		</tr>
-			      <?php } ?>
+			      <?php } 
+			      if($check2==0){ ?>
+				    	<div class="alert alert-warning" role="alert">Nothing found</div>
+				    <?php }?>
 			    </table>
 			<?php } ?>
 			<?php if (isset($_GET["nameOfLanguageSearch"])){?>
@@ -278,10 +280,8 @@
 				    	<th></th>	
 					</tr>
 				     <?php 
-				    if(mysql_fetch_array($sqlLanguageName) == false){ ?>
-				    	<div class="alert alert-warning" role="alert">Nothing found</div>
-				    <?php }
-				     while($rowLanguageName = mysql_fetch_array($sqlLanguageName)) { ?>
+				    $check3 = 0;
+				     while($rowLanguageName = mysql_fetch_array($sqlLanguageName)) {  $check3 = 1;?>
 					    <tr>
 					        <td><?php echo $rowLanguageName['ArtistArtist']; ?></td>
 					        <td><?php echo ucwords($rowLanguageName['SongName']); ?></td>
@@ -290,7 +290,10 @@
 							</span>
 							</a></div></td>
 			      		</tr>
-			      <?php } ?>
+			      <?php } 
+			      if($check3==0){ ?>
+				    	<div class="alert alert-warning" role="alert">Nothing found</div>
+				    <?php }?>
 			    </table>
 			<?php } ?>
 		</div>
