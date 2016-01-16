@@ -1,0 +1,108 @@
+
+.kelma{
+	width:20%;
+}
+
+.pixel{
+	height:3em;
+}
+.pixel1{
+	height:8em;
+}
+.pixel3{
+	height:3.7em;
+}
+
+.pager2{
+	position:fixed;
+	bottom:-0.8em;
+	z-index: 1040;
+}
+
+.rightPlace{
+	position:fixed;
+	right:1em;
+}
+
+ul tabindex{
+	z-index: 1040;
+}
+
+
+.quote{
+	padding: 0 0 10% 0;
+}
+.quoteHolder{
+	padding-bottom:1%;
+}
+.facebookQuote{
+	background-color:#eee;
+	padding:1% 4% 1% 4%;
+	border-radius:1em;
+
+}
+.facebookQuoteSuper{
+	color:#AFAFAF;
+	position:absolute;
+}
+.facebookImage{
+	height:100%;
+	width:100%;
+	max-height:4em;
+	max-width:4em;
+}
+
+@media all and (max-width : 450px)
+{
+	.facebookQuote{
+		font-size:1.7em;
+		padding:4% 8% 4% 6%;
+		border-radius:0.7em;
+	}
+	
+	.facebookImage{
+		vertical-align:inherit;
+	}
+	
+	.facebookQuoteSuper{
+		padding:0 0 0 12%;
+	}
+}
+@media all and (min-width : 1000px)
+{
+	.facebookQuote{
+		display:inline;
+		padding:1% 2% 1% 2%;
+	}
+	
+	.quote{
+		padding:0 0 3% 0;
+	}
+	
+/* 	.facebookImage{
+		display:inline;
+	}
+ */
+	.facebookQuoteSuper{
+		padding:0 0 0 2.4%;
+		position:absolute;
+		z-index:1000;
+		margin-top:-1.5%;
+	}
+}
+
+
+.myrow {
+    font-size: 0;
+}
+.myrow > * {
+    float: none;
+    display: inline-block;
+    font-size: 14px; /* if using LESS it's quicker to just use @font-size-base */
+}
+.myrow > *:last-child {
+    vertical-align: bottom;
+}
+.myrow p:last-child {
+    margin-bottom: 0; /* optional */
+}
