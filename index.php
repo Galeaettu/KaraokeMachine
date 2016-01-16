@@ -304,7 +304,14 @@
 		<div class="pixel1"></div>
 		<nav class="navbar navbar-default navbar-fixed-bottom">
 			<div class="container">
-				<?php $sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='2'"); ?>
+				<?php 
+				if (isset($_GET["id"])){
+						$_GET["id"] = $_GET["id"];
+					}
+					else{
+						//$_GET["id"] = rand(1,100);
+					}
+				$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$_GET["id"]."'"); ?>
 				<div class="navbar-header">
 					<?php 
 					$numRows = 1;
@@ -319,7 +326,8 @@
 					} ;
 					?>
 					<?php
-					for ($i=1;$i<=$numRows;$i++){
+					$numRows = 5-$numRows;
+					for ($i=0;$i<=$numRows;$i++){
 						echo "<a class='navbar-brand ' href='#''>
 								<img class='circleImage' alt='Brand' src='images/circle.png'>
 							</a>";
