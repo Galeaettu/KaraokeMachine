@@ -1,0 +1,32 @@
+#nameOfSongSearch {
+	width: 200px;
+	font-size: 1em;
+}
+
+#results {
+	width: 204px;
+	position: absolute;
+	border: 1px solid #c0c0c0;
+	display: none;
+	background-color: #fff;
+	z-index: 999;
+	height:100px;
+	overflow:scroll;
+}
+
+#results .item {
+	padding: 3px;
+	font-family: Helvetica;
+	background-color: #fff;
+	border-bottom: 1px solid #c0c0c0;
+}
+
+#results .item:last-child {
+	width: 204px;
+	border-bottom: 0px;
+}
+
+#results .item:hover {
+	background-color: #f2f2f2;
+	cursor: pointer;
+}

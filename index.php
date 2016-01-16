@@ -3,13 +3,16 @@
 		<title>Karaoke</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">	
 		<script src="//code.jquery.com/jquery-1.10.2.js"></script>		
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  		<script src="js/autocomplete.js"></script>
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>	
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" type="text/css" href="css/site.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
 
 		<style>
 			html{
@@ -24,6 +27,12 @@
 	<body>
 		<div class="jumbotron">
 			<div class="container">
+				<!-- <input type="text" value="" placeholder="Search" id="keyword"> -->
+<!-- 				<div id="results">
+					<div class="item">abc</div>
+					<div class="item">def</div>
+					<div class="item">hij</div>
+				</div> -->
 				<?php
 					if (isset($_GET["id"])){
 						$_GET["id"] = $_GET["id"];
@@ -50,14 +59,26 @@
 						// }
 					$row = mysql_fetch_array($rs);
 					$url = $row['SongURL'];
-					echo 
+					if($_GET["id"] >= 0 && $_GET["id"] <= $num_rows){
+						echo 
 						"<h2>". $row['ArtistArtist']." - ".ucwords($row['SongName']) . 
 							" <a href='". $row['SongURL']."' target='_blank' class='btn btn-primary' role='button' data-toggle='tooltip' data-placement='top' title='Open video in new tab'>
 								<span class='glyphicon glyphicon-new-window'>
 								</span>
 							</a>
 						</h2>";
+					}else{
+						echo 
+						"<h2> No Song Found - Try a Random Video
+							 <a href='?id=".$rand."' class='btn btn-primary' role='button' data-toggle='tooltip' data-placement='bottom' title='Random Video'>
+								<span class='glyphicon glyphicon-refresh'>
+								</span>
+							</a>
+						</h2>";
+					}
+					
 					//}
+
 				?>
 				
 			</div>
@@ -68,7 +89,7 @@
 		    preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $url, $matches);
 		    $id = $matches[1];
 
-			
+			if($_GET["id"] >= 0 && $_GET["id"] <= $num_rows){
 			?>
 
 			<div class="embed-responsive embed-responsive-16by9">
@@ -102,6 +123,7 @@
 					</a></div>"
 				?>
 			  </ul>
+			  <?php } ?>
 			</nav>
 			<a class="btn btn-primary" role="button" data-toggle="collapse" data-target="#collapseExample">
 			  All Songs
@@ -149,11 +171,15 @@
 							<div class="panel-body">
 							    <form class="form-inline">
 								  	<div class="form-group">
-									    <label for="nameOfSongSearch">Name of Song</label>
-									    <input type="text" class="form-control" id="nameOfSongSearch" name="nameOfSongSearch">
+								  		<div class=" col-sm-12">
+										    <!-- <label for="nameOfSongSearch">Name of Song</label> -->
+										    <input type="text" class="form-control" id="nameOfSongSearch" name="nameOfSongSearch" placeholder="Name of Song">
+										</div>
+										<div id="results"></div>
 								  	</div>
 								  	<button type="submit" class="btn btn-default"><span class='glyphicon glyphicon-search'></span> Search</button>
 								</form>
+								
 							</div>
 							<?php
 								if (isset($_GET["nameOfSongSearch"])){
@@ -336,18 +362,6 @@
 							</a>";
 					}
 					?>
-<!-- 					<a class="navbar-brand " href="#">
-						<img class="circleImage" alt="Brand" src="images/circle.png">
-					</a>
-					<a class="navbar-brand " href="#">
-						<img class="circleImage" alt="Brand" src="images/circle.png">
-					</a>
-					<a class="navbar-brand " href="#">
-						<img class="circleImage" alt="Brand" src="images/circle.png">
-					</a>
-					<a class="navbar-brand " href="#">
-						<img class="circleImage" alt="Brand" src="images/circle.png">
-					</a> -->
 				</div>				
 			</div>
 		</nav>
