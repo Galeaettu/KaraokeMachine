@@ -162,7 +162,7 @@
 								if (!empty($_REQUEST['nameOfSongSearch'])) {
 								$term = mysql_real_escape_string($_REQUEST['nameOfSongSearch']); 
 								}
-								$sqlSongName = mysql_query("SELECT Song.Song_Id AS SongId, Song.Song_Name AS SongName, Artist.Artist As ArtistArtist FROM Song INNER JOIN Artist On Song.Artist_Id=Artist.Artist_Id WHERE Song.Song_Name LIKE '%".$term."%' ORDER By ArtistArtist");
+								$sqlSongName = mysql_query("SELECT Song.Song_Id AS SongId, Song.Song_Name AS SongName, Artist.Artist As ArtistArtist FROM Song INNER JOIN Artist On Song.Artist_Id=Artist.Artist_Id WHERE Song.Song_Name LIKE '%".$term."%'");
 							?>
 						</div>
 					</div>
@@ -190,7 +190,7 @@
 								if (!empty($_REQUEST['nameOfArtistSearch'])) {
 								$term = mysql_real_escape_string($_REQUEST['nameOfArtistSearch']); 
 								}
-								$sqlArtistName = mysql_query("SELECT Song.Song_Id AS SongId, Song.Song_Name AS SongName, Artist.Artist As ArtistArtist FROM Song INNER JOIN Artist On Song.Artist_Id=Artist.Artist_Id WHERE Artist.Artist LIKE '%".$term."%' ORDER By ArtistArtist");
+								$sqlArtistName = mysql_query("SELECT Song.Song_Id AS SongId, Song.Song_Name AS SongName, Artist.Artist As ArtistArtist FROM Song INNER JOIN Artist On Song.Artist_Id=Artist.Artist_Id WHERE Artist.Artist LIKE '%".$term."%'");
 							?>
 						</div>
 					</div>
@@ -219,7 +219,7 @@
 								if (!empty($_REQUEST['nameOfLanguageSearch'])) {
 								$term = mysql_real_escape_string($_REQUEST['nameOfLanguageSearch']); 
 								}
-								$sqlLanguageName = mysql_query("SELECT Song.Song_Id AS SongId, Song.Song_Name AS SongName, Artist.Artist As ArtistArtist, Song.Language_Id FROM Song INNER JOIN Artist On Song.Artist_Id=Artist.Artist_Id WHERE Song.Language_Id LIKE '%".$term."%' ORDER By ArtistArtist");
+								$sqlLanguageName = mysql_query("SELECT Song.Song_Id AS SongId, Song.Song_Name AS SongName, Artist.Artist As ArtistArtist, Song.Language_Id FROM Song INNER JOIN Artist On Song.Artist_Id=Artist.Artist_Id WHERE Song.Language_Id LIKE '%".$term."%'");
 							?>
 						</div>
 					</div>
