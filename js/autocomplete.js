@@ -9,7 +9,7 @@ $( document ).ready(function() {
 				$('#results').html('');
 				var results = jQuery.parseJSON(data);
 				$(results).each(function(key, value) {
-					$('#results').append('<div class="item">' + value + '</div>');
+					$('#results').append(' <button type="button" class="list-group-item item">' + value + '</button>');
 				})
 
 			    $('.item').click(function() {

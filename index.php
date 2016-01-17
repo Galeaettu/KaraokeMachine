@@ -59,7 +59,7 @@
 						// }
 					$row = mysql_fetch_array($rs);
 					$url = $row['SongURL'];
-					if($_GET["id"] >= 0 && $_GET["id"] <= $num_rows){
+					if($_GET["id"] > 0 && $_GET["id"] <= $num_rows){
 						echo 
 						"<h2>". $row['ArtistArtist']." - ".ucwords($row['SongName']) . 
 							" <a href='". $row['SongURL']."' target='_blank' class='btn btn-primary' role='button' data-toggle='tooltip' data-placement='top' title='Open video in new tab'>
@@ -89,7 +89,7 @@
 		    preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $url, $matches);
 		    $id = $matches[1];
 
-			if($_GET["id"] >= 0 && $_GET["id"] <= $num_rows){
+			if($_GET["id"] > 0 && $_GET["id"] <= $num_rows){
 			?>
 
 			<div class="embed-responsive embed-responsive-16by9">
@@ -99,23 +99,23 @@
 				</iframe> 
 			</div>
 
-			<nav>
+		<nav>
 			  <ul class="pager">
 				<?php
 					$addressId = $_GET["id"];
 
-					if($addressId >= $num_rows){
-						echo "<li><a href='?id=1'>First</a></li>";
-					}
-					else if($addressId < 1){
-						print "<li><a href='?id=1'>First</a></li>";
-					}
-					else {
+					// if($addressId >= $num_rows){
+					// 	echo "<li><a href='?id=1'>First</a></li>";
+					// }
+					// else if($addressId < 1){
+					// 	print "<li><a href='?id=1'>First</a></li>";
+					// }
+					if($_GET["id"] > 0 ) {
 						print "<li class='previous'><a href='?id=".($_GET["id"]-1)."'>Previous</a></li>";
+					}
+					if($_GET["id"] < $num_rows) {
 						print "<li class='next'><a href='?id=".($_GET["id"]+1)."'>Next</a></li>";
 					}
-					//print "<br/> <b><a href='?id=".$rand."'>Random Song</a></b><br/>";
-
 					echo 
 					"<div><a href='?id=".$rand."' class='btn btn-primary' role='button' data-toggle='tooltip' data-placement='bottom' title='Random Video'>
 						<span class='glyphicon glyphicon-refresh'>
@@ -131,6 +131,57 @@
 			<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1">
 			  Search
 			</button>
+			<form action='' method='POST'>
+			    <button type="submit" name="btnChris" id="btnChris" class="btn btn-default"></span>Christian</button>
+			    <button type="submit" name="btnBen" id="btnChris" class="btn btn-primary"></span>Benjamin</button>
+			    <button type="submit" name="btnMyriah" id="btnChris" class="btn btn-info"></span>Myriah</button>
+			    <button type="submit" name="btnRoxanne" id="btnChris" class="btn btn-danger"></span>Roxanne</button>
+			    <button type="submit" name="btnGilbert" id="btnChris" class="btn btn-warning"></span>Gilbert</button>
+			</form>
+			<?php 
+			
+			if(isset($_POST['btnChris'])){
+				$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (1,%s)",mysql_real_escape_string($addressId));
+				$sqlChrisQ = mysql_query($sqlChris);
+				if($sqlChrisQ){
+					echo "Added";
+				}
+			}
+
+			if(isset($_POST['btnBen'])){
+				$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (4,%s)",mysql_real_escape_string($addressId));
+				$sqlChrisQ = mysql_query($sqlChris);
+				if($sqlChrisQ){
+					echo "Added";
+				}
+			}
+
+			if(isset($_POST['btnMyriah'])){
+				$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (2,%s)",mysql_real_escape_string($addressId));
+				$sqlChrisQ = mysql_query($sqlChris);
+				if($sqlChrisQ){
+					echo "Added";
+				}
+			}
+
+			if(isset($_POST['btnRoxanne'])){
+				$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (3,%s)",mysql_real_escape_string($addressId));
+				$sqlChrisQ = mysql_query($sqlChris);
+				if($sqlChrisQ){
+					echo "Added";
+				}
+			}
+
+			if(isset($_POST['btnGilbert'])){
+				$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (5,%s)",mysql_real_escape_string($addressId));
+				$sqlChrisQ = mysql_query($sqlChris);
+				if($sqlChrisQ){
+					echo "Added";
+				}
+			}
+
+			?>
+
 			<?php
 			$sqlAll = mysql_query("SELECT Song.Song_Id AS SongId, Song.Song_Name AS SongName, Artist.Artist As ArtistArtist, Song.Url AS SongURL FROM Song INNER JOIN Artist On Song.Artist_Id=Artist.Artist_Id ORDER By ArtistArtist");
 			?>
@@ -175,10 +226,12 @@
 										    <!-- <label for="nameOfSongSearch">Name of Song</label> -->
 										    <input type="text" class="form-control" id="nameOfSongSearch" name="nameOfSongSearch" placeholder="Name of Song">
 										</div>
-										<div id="results"></div>
+
 								  	</div>
 								  	<button type="submit" class="btn btn-default"><span class='glyphicon glyphicon-search'></span> Search</button>
+								  	<div id="results" class="list-group"></div>
 								</form>
+
 								
 							</div>
 							<?php
