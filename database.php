@@ -33,4 +33,5 @@ function searchForKeyword($keyword) {
 
     return $results;
 }
+
 ?>

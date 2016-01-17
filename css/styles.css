@@ -1,5 +1,6 @@
 h1,h2{
 	font-family: 'Kadwa', serif;
+	text-shadow: 1px 1px white;
 }
 
 ::-webkit-scrollbar {
@@ -15,7 +16,7 @@ h1,h2{
 	width: 201px;
 	position: absolute;
 	margin-left: 1em;
-	border: 1px solid #c0c0c0;
+	/*border: 1px solid #c0c0c0;*/
 	display: none;
 	background-color: #fff;
 	z-index: 999;
@@ -28,7 +29,7 @@ h1,h2{
 #results .item {
 	padding: 3px;
 	font-family: Helvetica;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	border-bottom: 1px solid #c0c0c0;
 }
 
@@ -38,6 +39,6 @@ h1,h2{
 }
 
 #results .item:hover {
-	background-color: #f2f2f2;
+	/*background-color: #f2f2f2;*/
 	cursor: pointer;
 }

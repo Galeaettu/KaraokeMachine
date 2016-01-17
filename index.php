@@ -14,6 +14,65 @@
 		<link href='https://fonts.googleapis.com/css?family=Kadwa:700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/site.css">
 		<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<link rel="apple-touch-icon" sizes="57x57" href="/images/icons/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/images/icons/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/images/icons/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/images/icons/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/images/icons/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/images/icons/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/images/icons/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/images/icons/apple-touch-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon-180x180.png">
+		<link rel="icon" type="image/png" href="/images/icons/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/images/icons/android-chrome-192x192.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/images/icons/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="/images/icons/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/images/icons/manifest.json">
+		<link rel="mask-icon" href="/images/icons/safari-pinned-tab.svg" color="#5bbad5">
+		<link rel="shortcut icon" href="/images/icons/favicon.ico">
+		<meta name="apple-mobile-web-app-title" content="Karaoke">
+		<meta name="application-name" content="Karaoke">
+		<meta name="msapplication-TileColor" content="#b91d47">
+		<meta name="msapplication-TileImage" content="/images/icons/mstile-144x144.png">
+		<meta name="msapplication-config" content="/images/icons/browserconfig.xml">
+		<meta name="theme-color" content="#ffffff">
+		<script>
+			$(document).ready(function(){
+			$('#idNewArtist').keyup(idNewArtist_check);
+			});
+				
+			function idNewArtist_check(){	
+			var idNewArtist = $('#idNewArtist').val();
+			if(idNewArtist == "" || idNewArtist.length < 3){
+			$('#idNewArtist').css('border', '3px #CCC solid');
+			$('#tick').hide();
+			}else{
+
+			jQuery.ajax({
+			   type: "POST",
+			   url: "check.php",
+			   data: 'idNewArtist='+ idNewArtist,
+			   cache: false,
+			   success: function(response){
+			if(response == 1){
+				$('#idNewArtist').css('border', '3px #C33 solid');	
+				$('#tick').hide();
+				$('#cross').fadeIn();
+				}else{
+				$('#idNewArtist').css('border', '3px #090 solid');
+				$('#cross').hide();
+				$('#tick').fadeIn();
+				     }
+
+			}
+			});
+			}
+
+
+
+			}
+
+		</script>
 
 		<style>
 			html{
@@ -23,6 +82,22 @@
 				width:100%;
 				max-width: 1.25em;
 			}
+			.embed-responsive{
+				border-radius: 1em;
+			}
+			.modal-backdrop {
+				z-index: 0;
+			}
+			#idNewArtist{
+				padding:3px;
+				font-size:18px;
+				border:3px #CCC solid;
+			}
+
+			#tick{display:none}
+			#cross{display:none}
+				
+
 		</style>
 	</head>
 	<body>
@@ -117,11 +192,11 @@
 					if($_GET["id"] < $num_rows) {
 						print "<li class='next'><a href='?id=".($_GET["id"]+1)."'>Next</a></li>";
 					}
-					echo 
-					"<div><a href='?id=".$rand."' class='btn btn-primary' role='button' data-toggle='tooltip' data-placement='bottom' title='Random Video'>
-						<span class='glyphicon glyphicon-refresh'>
-						</span>
-					</a></div>"
+					// echo 
+					// "<div><a href='?id=".$rand."' class='btn btn-primary' role='button' data-toggle='tooltip' data-placement='bottom' title='Random Video'>
+					// 	<span class='glyphicon glyphicon-refresh'>
+					// 	</span>
+					// </a></div>"
 				?>
 			  </ul>
 			  <?php } ?>
@@ -134,12 +209,12 @@
 			<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1">
 			  Search
 			</button>
-				<label for="btnChris"> I Know This! - </label>
-			    <button type="submit" name="btnChris" id="btnChris" class="btn btn-success"></span>Christian</button>
-			    <button type="submit" name="btnBen" id="btnBen" class="btn btn-primary"></span>Benjamin</button>
-			    <button type="submit" name="btnMyriah" id="btnMyriah" class="btn btn-info"></span>Myriah</button>
-			    <button type="submit" name="btnRoxanne" id="btnRoxanne" class="btn btn-danger"></span>Roxanne</button>
-			    <button type="submit" name="btnGilbert" id="btnGilbert" class="btn btn-warning"></span>Gilbert</button>
+				<label class= "hidden-xs hidden-sm"for="btnChris"> I Know This! - </label>
+			    <button type="submit" name="btnChris" id="btnChris" class="btn btn-success hidden-xs hidden-sm"></span>Christian</button>
+			    <button type="submit" name="btnBen" id="btnBen" class="btn btn-primary hidden-xs hidden-sm"></span>Benjamin</button>
+			    <button type="submit" name="btnMyriah" id="btnMyriah" class="btn btn-info hidden-xs hidden-sm"></span>Myriah</button>
+			    <button type="submit" name="btnRoxanne" id="btnRoxanne" class="btn btn-danger hidden-xs hidden-sm"></span>Roxanne</button>
+			    <button type="submit" name="btnGilbert" id="btnGilbert" class="btn btn-warning hidden-xs hidden-sm"></span>Gilbert</button>
 			</form>
 			<?php 
 			
@@ -193,11 +268,12 @@
 					<div class="panel-heading">
 						<h3></h3>
 					</div>
-					<table class="table table-striped">
+					<table class="table table-striped table-hover">
 						<tr>
 						    <th>Artist</th>
 					    	<th>Title</th>
-					    	<th>Know It</th>
+					    	<th class="hidden-xs hidden-sm">Know It</th>
+					    	<th class="visible-xs visible-sm"></th>
 					    	<th>Play</th>
 						</tr>
 					    <?php while($rows = mysql_fetch_array($sqlAll)) { ?>
@@ -207,7 +283,7 @@
 								<td>
 									<?php 
 									$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$rows['SongId']."'"); ?>
-									<div>
+									<div class="hidden-xs hidden-sm">
 										<?php 
 										$numRows = 1;
 										while($rowFacebookImg = mysql_fetch_array($sqlPersonSong)) { ?>
@@ -247,7 +323,7 @@
 								  	<div class="form-group">
 								  		<div class=" col-sm-12">
 										    <!-- <label for="nameOfSongSearch">Name of Song</label> -->
-										    <input type="text" class="form-control" id="nameOfSongSearch" name="nameOfSongSearch" placeholder="Name of Song">
+										    <input type="text" class="form-control" id="nameOfSongSearch" name="nameOfSongSearch" autocomplete="off" placeholder="Name of Song">
 										</div>
 
 								  	</div>
@@ -330,154 +406,176 @@
 			</div>
 			<?php if (isset($_GET["nameOfSongSearch"])){?>
 				<h3></h3>
-				<table class="table table-striped">
-					<tr>
-					    <th>Artist</th>
-				    	<th>Title</th>
-				    	<th>Know It</th>
-					    <th>Play</th>
-	
-					</tr>
-				    <?php 
-				    $check1 = 0;
-				    while($rowSongName = mysql_fetch_array($sqlSongName)) { $check1 = 1;?>
-					    <tr>
-					        <td><?php echo $rowSongName['ArtistArtist']; ?></td>
-					        <td><?php echo ucwords($rowSongName['SongName']); ?></td>
-<!-- 					        <td>
-					        	<div>
-					        		<a href="?id=<?php print $rowSongName['SongId'] ?> "class='btn btn-primary' role='button'>
-										<span class='glyphicon glyphicon-play-circle'>
-										</span>
-									</a>
-								</div>
-							</td> -->
-							<td>
-								<?php 
-								$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$rowSongName['SongId']."'"); ?>
-								<div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h3 class="panel-title">Search Results for "<?php echo $term?>"</h3>
+					</div>
+					<table class="table table-hover table-striped">
+						<tr>
+						    <th>Artist</th>
+					    	<th>Title</th>
+					    	<th class="hidden-xs hidden-sm">Know It</th>
+					    	<th class="visible-xs visible-sm"></th>
+						    <th>Play</th>
+		
+						</tr>
+					    <?php 
+					    $check1 = 0;
+					    while($rowSongName = mysql_fetch_array($sqlSongName)) { $check1 = 1;?>
+						    <tr>
+						        <td><?php echo $rowSongName['ArtistArtist']; ?></td>
+						        <td><?php echo ucwords($rowSongName['SongName']); ?></td>
+	<!-- 					        <td>
+						        	<div>
+						        		<a href="?id=<?php print $rowSongName['SongId'] ?> "class='btn btn-primary' role='button'>
+											<span class='glyphicon glyphicon-play-circle'>
+											</span>
+										</a>
+									</div>
+								</td> -->
+								<td>
 									<?php 
-									$numRows = 1;
-									while($rowFacebookImg = mysql_fetch_array($sqlPersonSong)) { ?>
-									<a href="#">
-										<img class="circleImage img-circle" alt="Brand" src="http://graph.facebook.com/<?php print $rowFacebookImg['FacebookID'] ?>/picture?type=square&width=200&height=200" 
-										data-toggle='tooltip' data-placement='top' title='<?php print $rowFacebookImg['PersonName'] ?>'>
-									</a>
-									<?php } ?>
-								</div>
-							</td>
-							<td>
-					        	<div>
-					        		<a href="?id=<?php print $rowSongName['SongId'] ?> "class='btn btn-primary' role='button'>
-										<span class='glyphicon glyphicon-play-circle'>
-										</span>
-									</a>
-								</div>
-							</td>
-			      		</tr>
-			      <?php } 
-			      if($check1==0){ ?>
-				    	<div class="alert alert-warning" role="alert">Nothing found</div>
-				    <?php }?>
-			    </table>
+									$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$rowSongName['SongId']."'"); ?>
+									<div class="hidden-xs hidden-sm">
+										<?php 
+										$numRows = 1;
+										while($rowFacebookImg = mysql_fetch_array($sqlPersonSong)) { ?>
+										<a href="#">
+											<img class="circleImage img-circle" alt="Brand" src="http://graph.facebook.com/<?php print $rowFacebookImg['FacebookID'] ?>/picture?type=square&width=200&height=200" 
+											data-toggle='tooltip' data-placement='top' title='<?php print $rowFacebookImg['PersonName'] ?>'>
+										</a>
+										<?php } ?>
+									</div>
+								</td>
+								<td>
+						        	<div>
+						        		<a href="?id=<?php print $rowSongName['SongId'] ?> "class='btn btn-primary' role='button'>
+											<span class='glyphicon glyphicon-play-circle'>
+											</span>
+										</a>
+									</div>
+								</td>
+				      		</tr>
+				      <?php } 
+				      if($check1==0){ ?>
+					    	<div class="alert alert-warning" role="alert">Nothing found</div>
+					    <?php }?>
+				    </table>
+				</div>
 			<?php } ?>
 			<?php if (isset($_GET["nameOfArtistSearch"])){?>
 				<h3></h3>
-				<table class="table table-striped">
-				     <?php 
-				    $check2 = 0;
-				     while($rowArtistName = mysql_fetch_array($sqlArtistName)) { $check2 = 1;?>
-					    <tr>
-					        <td><?php echo $rowArtistName['ArtistArtist']; ?></td>
-					        <td><?php echo ucwords($rowArtistName['SongName']); ?></td>
-<!-- 					        <td>
-					        	<div>
-					        		<a href="?id=<?php print $rowArtistName['SongId'] ?> "class='btn btn-primary' role='button'>
-										<span class='glyphicon glyphicon-play-circle'>
-										</span>
-									</a>
-								</div>
-							</td> -->
-							<td>
-								<?php 
-								$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$rowArtistName['SongId']."'"); ?>
-								<div>
+				<div class="panel">
+					<div class="panel-heading">
+						<h3 class="panel-title">Search Results for "<?php echo $term?>"</h3>
+					</div>
+					<table class="table table-striped table-hover">
+						<tr>
+						    <th>Artist</th>
+					    	<th>Title</th>
+					    	<th class="hidden-xs hidden-sm">Know It</th>
+					    	<th class="visible-xs visible-sm"></th>
+						    <th>Play</th>	
+						</tr>
+					     <?php 
+					    $check2 = 0;
+					     while($rowArtistName = mysql_fetch_array($sqlArtistName)) { $check2 = 1;?>
+						    <tr>
+						        <td><?php echo $rowArtistName['ArtistArtist']; ?></td>
+						        <td><?php echo ucwords($rowArtistName['SongName']); ?></td>
+	<!-- 					        <td>
+						        	<div>
+						        		<a href="?id=<?php print $rowArtistName['SongId'] ?> "class='btn btn-primary' role='button'>
+											<span class='glyphicon glyphicon-play-circle'>
+											</span>
+										</a>
+									</div>
+								</td> -->
+								<td>
 									<?php 
-									$numRows = 1;
-									while($rowFacebookImg = mysql_fetch_array($sqlPersonSong)) { ?>
-									<a href="#">
-										<img class="circleImage img-circle" alt="Brand" src="http://graph.facebook.com/<?php print $rowFacebookImg['FacebookID'] ?>/picture?type=square&width=200&height=200" 
-										data-toggle='tooltip' data-placement='top' title='<?php print $rowFacebookImg['PersonName'] ?>'>
-									</a>
-									<?php } ?>
-								</div>
-							</td>
-							<td>
-					        	<div>
-					        		<a href="?id=<?php print $rowArtistName['SongId'] ?> "class='btn btn-primary' role='button'>
-										<span class='glyphicon glyphicon-play-circle'>
-										</span>
-									</a>
-								</div>
-							</td>
-			      		</tr>
-			      <?php } 
-			      if($check2==0){ ?>
-				    	<div class="alert alert-warning" role="alert">Nothing found</div>
-				    <?php }?>
-			    </table>
+									$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$rowArtistName['SongId']."'"); ?>
+									<div class="hidden-xs hidden-sm">
+										<?php 
+										$numRows = 1;
+										while($rowFacebookImg = mysql_fetch_array($sqlPersonSong)) { ?>
+										<a href="#">
+											<img class="circleImage img-circle" alt="Brand" src="http://graph.facebook.com/<?php print $rowFacebookImg['FacebookID'] ?>/picture?type=square&width=200&height=200" 
+											data-toggle='tooltip' data-placement='top' title='<?php print $rowFacebookImg['PersonName'] ?>'>
+										</a>
+										<?php } ?>
+									</div>
+								</td>
+								<td>
+						        	<div>
+						        		<a href="?id=<?php print $rowArtistName['SongId'] ?> "class='btn btn-primary' role='button'>
+											<span class='glyphicon glyphicon-play-circle'>
+											</span>
+										</a>
+									</div>
+								</td>
+				      		</tr>
+				      <?php } 
+				      if($check2==0){ ?>
+					    	<div class="alert alert-warning" role="alert">Nothing found</div>
+					    <?php }?>
+				    </table>
+				</div>
 			<?php } ?>
 			<?php if (isset($_GET["nameOfLanguageSearch"])){?>
 				<h3></h3>
-				<table class="table table-striped">
-					<tr>
-					    <th>Artist</th>
-				    	<th>Title</th>
-				    	<th>Know It</th>
-					    <th>Play</th>	
-					</tr>
-				     <?php 
-				    $check3 = 0;
-				     while($rowLanguageName = mysql_fetch_array($sqlLanguageName)) {  $check3 = 1;?>
-					    <tr>
-					        <td><?php echo $rowLanguageName['ArtistArtist']; ?></td>
-					        <td><?php echo ucwords($rowLanguageName['SongName']); ?></td>
-<!-- 					        <td>
-					        	<div>
-					        		<a href="?id=<?php print $rowLanguageName['SongId'] ?> "class='btn btn-primary' role='button'>
-										<span class='glyphicon glyphicon-play-circle'>
-										</span>
-									</a>
-								</div>
-							</td> -->
-							<td>
-								<?php 
-								$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$rowLanguageName['SongId']."'"); ?>
-								<div>
+				<div class="panel">
+					
+					<table class="table table-striped table-hover">
+						<tr>
+						    <th>Artist</th>
+					    	<th>Title</th>
+					    	<th class="hidden-xs hidden-sm">Know It</th>
+					    	<th class="visible-xs visible-sm"></th>
+						    <th>Play</th>	
+						</tr>
+					     <?php 
+					    $check3 = 0;
+					     while($rowLanguageName = mysql_fetch_array($sqlLanguageName)) {  $check3 = 1;?>
+						    <tr>
+						        <td><?php echo $rowLanguageName['ArtistArtist']; ?></td>
+						        <td><?php echo ucwords($rowLanguageName['SongName']); ?></td>
+	<!-- 					        <td>
+						        	<div>
+						        		<a href="?id=<?php print $rowLanguageName['SongId'] ?> "class='btn btn-primary' role='button'>
+											<span class='glyphicon glyphicon-play-circle'>
+											</span>
+										</a>
+									</div>
+								</td> -->
+								<td>
 									<?php 
-									$numRows = 1;
-									while($rowFacebookImg = mysql_fetch_array($sqlPersonSong)) { ?>
-									<a href="#">
-										<img class="circleImage img-circle" alt="Brand" src="http://graph.facebook.com/<?php print $rowFacebookImg['FacebookID'] ?>/picture?type=square&width=200&height=200" 
-										data-toggle='tooltip' data-placement='top' title='<?php print $rowFacebookImg['PersonName'] ?>'>
-									</a>
-									<?php } ?>
-								</div>
-							</td>
-							<td>
-					        	<div>
-					        		<a href="?id=<?php print $rowLanguageName['SongId'] ?> "class='btn btn-primary' role='button'>
-										<span class='glyphicon glyphicon-play-circle'>
-										</span>
-									</a>
-								</div>
-							</td>
-			      		</tr>
-			      <?php } 
-			      if($check3==0){ ?>
-				    	<div class="alert alert-warning" role="alert">Nothing found</div>
-				    <?php }?>
-			    </table>
+									$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$rowLanguageName['SongId']."'"); ?>
+									<div class="hidden-xs hidden-sm">
+										<?php 
+										$numRows = 1;
+										while($rowFacebookImg = mysql_fetch_array($sqlPersonSong)) { ?>
+										<a href="#">
+											<img class="circleImage img-circle" alt="Brand" src="http://graph.facebook.com/<?php print $rowFacebookImg['FacebookID'] ?>/picture?type=square&width=200&height=200" 
+											data-toggle='tooltip' data-placement='top' title='<?php print $rowFacebookImg['PersonName'] ?>'>
+										</a>
+										<?php } ?>
+									</div>
+								</td>
+								<td>
+						        	<div>
+						        		<a href="?id=<?php print $rowLanguageName['SongId'] ?> "class='btn btn-primary' role='button'>
+											<span class='glyphicon glyphicon-play-circle'>
+											</span>
+										</a>
+									</div>
+								</td>
+				      		</tr>
+				      <?php } 
+				      if($check3==0){ ?>
+					    	<div class="alert alert-warning" role="alert">Nothing found</div>
+					    <?php }?>
+				    </table>
+				</div>
 			<?php } ?>
 		</div>
 		<script src="js/script.js"></script>
@@ -516,7 +614,83 @@
 							</a>";
 					}
 					?>
-				</div>				
+				</div>
+				<?php if($_GET["id"] > 0 && $_GET["id"] <= $num_rows){
+					echo 
+					"<p class='navbar-text hidden-xs hidden-sm'>". $row['ArtistArtist']." - ".ucwords($row['SongName'])."</p>";
+				}else{
+					echo 
+					"<p class='navbar-text hidden-xs hidden-sm'> No Song Found - Try a Random Video </p>";
+				} ?>
+				
+
+				<div class="btn-group navbar-right">					
+					<a href='?id=<?php echo $rand  ?>' class='btn btn-primary navbar-btn' role='button'>
+						<span class='glyphicon glyphicon-refresh'>
+						</span>
+						<span class="hidden-xs hidden-sm"> Random Song</span>
+					</a>
+					<button type="button" class="btn btn-primary navbar-btn" data-toggle="modal" data-target=".addSong">
+						<span class='glyphicon glyphicon-edit'>
+						</span>
+						<span class="hidden-xs hidden-sm"> Add Song</span>
+					</button> 
+				</div>
+
+				<div class="modal fade addSong" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+						    <div class="modal-header">
+							    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							    <h4 class="modal-title" id="myModalLabel">Add Karaoke Video</h4>
+						    </div>
+						    <div class="modal-body">
+						    	<form action="autocomplete.js" method="post">
+							    	<div class="form-group">
+							    		<label for="idSongName">Song Name</label>
+    									<input type="text" class="form-control" id="idSongName" placeholder="The name of the song">
+							    	</div>
+							    	<div class="form-group">
+							    		<label for="idSongUrl">YouTube URL</label>
+    									<input type="text" class="form-control" id="idSongUrl" placeholder="eg. https://www.youtube.com/watch?v=nMDXPAM8RwE">
+							    	</div>
+							    	<div class="form-group">
+								    	<?php
+										$options = '';
+										$filterArtist=mysql_query("SELECT DISTINCT Artist.Artist_Id AS ArtistId, Artist.Artist AS ArtistName FROM Artist ORDER BY ArtistName");
+										while($rowArtist = mysql_fetch_array($filterArtist)) {
+										    $options .="<option value=" . $rowArtist['ArtistId'] . ">" . $rowArtist['ArtistName'] . "</option>";
+										}
+
+										$menu=" <label for='filterArtist'>Artist from Existing</label>
+										    <select class='form-control' name='filterArtist' id='filterArtist'>
+										      " . $options . "
+										    </select>";
+
+										echo $menu;
+
+										?>
+									</div>
+									<div class="form-group">
+<!-- 							    		<label for="idNewArtist">New Artist</label>
+    									<input type="text" class="form-control" id="idNewArtist" placeholder="Enter New Artist"><span id="info">Exists/Does not exist</span>
+    									<div id="results"></div> -->
+							    	</div>
+							    	<div class="form-group">
+							    		<label for="idNewArtist">New Artist</label>
+							    		<input class="form-control" name="idNewArtist" id="idNewArtist" type="text" autocomplete="off"/>
+										<img id="tick" src="images/tick.png" width="16" height="16"/>
+										<img id="cross" src="images/cross.png" width="16" height="16"/>
+							    	</div>
+						    	</form
+						    </div>
+						    <div class="modal-footer">
+							    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							    <button type="button" class="btn btn-primary">Save changes</button>
+						    </div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</nav>
 	</body>
