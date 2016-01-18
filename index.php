@@ -44,7 +44,7 @@
 			function idNewArtist_check(){	
 			var idNewArtist = $('#idNewArtist').val();
 			if(idNewArtist == "" || idNewArtist.length < 3){
-			$('#idNewArtist').css('border', '3px #CCC solid');
+			// $('#idNewArtist').css('border', '1px #CCC solid');
 			$('#tick').hide();
 			}else{
 
@@ -55,14 +55,14 @@
 			   cache: false,
 			   success: function(response){
 			if(response == 1){
-				$('#idNewArtist').css('border', '3px #C33 solid');	
+				$('#idNewArtist').css('border', '1px #C33 solid');	
 				$('#tick').hide();
 				$('#cross').fadeIn();
 				}else{
-				$('#idNewArtist').css('border', '3px #090 solid');
+				$('#idNewArtist').css('border', '1px #090 solid');
 				$('#cross').hide();
 				$('#tick').fadeIn();
-				     }
+				}
 
 			}
 			});
@@ -88,19 +88,35 @@
 			.modal-backdrop {
 				z-index: 0;
 			}
-			#idNewArtist{
-				padding:3px;
-				font-size:18px;
-				border:3px #CCC solid;
-			}
 
-			#tick{display:none}
-			#cross{display:none}
+			#tick{
+				margin-right: 1em;
+				margin-top:-1.7em;
+				display:none
+			}
+			#cross{
+				margin-right: 1em;
+				margin-top:-1.7em;
+				display:none
+			}
+			.error{
+				color:red;
+				font-weight: bold;
+				font-size: 0.8em;
+				position: absolute;
+				margin-top: -0.1em;
+			}
+			.error1{
+				color:red;
+				font-weight: bold;
+				font-size: 0.8em;
+			}
 				
 
 		</style>
 	</head>
 	<body>
+		<?php include("formCheck.php"); ?>
 		<div class="jumbotron">
 			<div class="container">
 				<!-- <input type="text" value="" placeholder="Search" id="keyword"> -->
@@ -110,6 +126,7 @@
 					<div class="item">hij</div>
 				</div> -->
 				<?php
+
 					if (isset($_GET["id"])){
 						$_GET["id"] = $_GET["id"];
 					}
@@ -160,6 +177,28 @@
 			</div>
 		</div>
 		<div class="container">
+			<?php 
+			$frmErrDiv;
+			if ($errCheck > 0){
+				$frmErrDiv = "";
+			} else{
+				$frmErrDiv = "hidden";
+			}
+			?>
+			<div class="<?php echo $frmErrDiv ?>">
+				<div class="alert alert-warning" role="alert">
+					Check the <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target=".addSong">
+						<span class='glyphicon glyphicon-edit'>
+						</span>
+						<span class="hidden-xs hidden-sm"> Add Song</span>
+					</button> form again.  <button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="modal" data-target=".addSong">
+						<?php if($errCheck > 1){echo "Errors ";}else{echo "Error ";}?>
+						<span class="badge">
+							<?php echo $errCheck; ?>
+						</span>
+					</button>
+				</div>
+			</div>
 			
 			<?php
 		    preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $url, $matches);
@@ -223,7 +262,10 @@
 				$sqlChrisQ = mysql_query($sqlChris);
 				if($sqlChrisQ){
 					echo "Added";
+				}else {
+					echo "You already know this!";
 				}
+
 			}
 
 			if(isset($_POST['btnBen'])){
@@ -231,6 +273,8 @@
 				$sqlChrisQ = mysql_query($sqlChris);
 				if($sqlChrisQ){
 					echo "Added";
+				}else {
+					echo "You already know this!";
 				}
 			}
 
@@ -239,6 +283,8 @@
 				$sqlChrisQ = mysql_query($sqlChris);
 				if($sqlChrisQ){
 					echo "Added";
+				}else {
+					echo "You already know this!";
 				}
 			}
 
@@ -247,6 +293,8 @@
 				$sqlChrisQ = mysql_query($sqlChris);
 				if($sqlChrisQ){
 					echo "Added";
+				}else {
+					echo "You already know this!";
 				}
 			}
 
@@ -255,6 +303,8 @@
 				$sqlChrisQ = mysql_query($sqlChris);
 				if($sqlChrisQ){
 					echo "Added";
+				}else {
+					echo "You already know this!";
 				}
 			}
 
@@ -645,44 +695,86 @@
 							    <h4 class="modal-title" id="myModalLabel">Add Karaoke Video</h4>
 						    </div>
 						    <div class="modal-body">
-						    	<form action="autocomplete.js" method="post">
+						    	<form action='' id="addForm" class="form-horizontal" method="post">
+						    		<div class="form-group <?php echo $frmErrDiv ?>">
+						    			<div class="col-sm-12">
+								    		<div class="alert alert-danger" role="alert">
+								    			<?php echo $formErrors ?>
+								    		</div>
+								    	</div>
+								    </div>
 							    	<div class="form-group">
-							    		<label for="idSongName">Song Name</label>
-    									<input type="text" class="form-control" id="idSongName" placeholder="The name of the song">
+							    		<div class="col-sm-8">
+								    		<label for="idSongName">Song Title </label><span class="error"> * <?php echo $songNameErr;?></span>
+	    									<input type="text" class="form-control" name="idSongName" id="idSongName" placeholder="The name of the song. eg. Never Gonna Give You Up" value="<?php echo $songName;?>">
+	    								</div>
 							    	</div>
 							    	<div class="form-group">
-							    		<label for="idSongUrl">YouTube URL</label>
-    									<input type="text" class="form-control" id="idSongUrl" placeholder="eg. https://www.youtube.com/watch?v=nMDXPAM8RwE">
+							    		<div class="col-sm-8">
+								    		<label for="idSongUrl">YouTube URL</label><span class="error"> * <?php echo $songUrlErr;?></span>
+	    									<input type="text" class="form-control" name="idSongUrl" id="idSongUrl" placeholder="eg. https://www.youtube.com/watch?v=nMDXPAM8RwE" value="<?php echo $songUrl;?>">
+	    								</div>
+	    								<div class="col-sm-4">
+							    			<label for="idLanguage">Language</label>
+										  	<select class="form-control" id="idLanguage" name="idLanguage">
+										  		<option value="2">English</option>
+												<option value="1">Maltese</option>
+												<option value="4">Italian</option>
+											</select>
+							    		</div>
 							    	</div>
 							    	<div class="form-group">
-								    	<?php
-										$options = '';
-										$filterArtist=mysql_query("SELECT DISTINCT Artist.Artist_Id AS ArtistId, Artist.Artist AS ArtistName FROM Artist ORDER BY ArtistName");
-										while($rowArtist = mysql_fetch_array($filterArtist)) {
-										    $options .="<option value=" . $rowArtist['ArtistId'] . ">" . $rowArtist['ArtistName'] . "</option>";
-										}
+							    		<div class="col-sm-12">
+								    		<div class="alert alert-info" role="alert">
+								    			<p><b>Important!</b> When entering the artist first check the <b>existing list</b>. Enter a new artist in the 'New Artist Check' field if you do not find the artist you need.</p>
+								    			<p>If the border is <b>red</b> check the existing list again.</p>
+								    		</div>
+								    	</div>
+							    		<div class="col-sm-6">
+									    	<?php
+											$options = '<option value="">Select Artist...</option>';
 
-										$menu=" <label for='filterArtist'>Artist from Existing</label>
-										    <select class='form-control' name='filterArtist' id='filterArtist'>
-										      " . $options . "
-										    </select>";
+											$filterArtist=mysql_query("SELECT DISTINCT Artist.Artist_Id AS ArtistId, Artist.Artist AS ArtistName FROM Artist ORDER BY ArtistName");
+											while($rowArtist = mysql_fetch_array($filterArtist)) {
+												if($rowArtist['ArtistId'] == $_POST["idOldArtist"]){
+													$selected =" selected ";
+												}
+												else{
+													$selected = "";
+												}
+											    $options .="<option ".$selected." value=" .  $rowArtist['ArtistId'] . ">" . $rowArtist['ArtistName'] . "</option>";
+											}
 
-										echo $menu;
+											$menu=" <label for='idOldArtist'>Artist from Existing</label><span class='error'>".$oldArtistErr."</span>
+											    <select class='form-control' name='idOldArtist' id='idOldArtist'>
+											      " . $options . "
+											    </select>";
 
-										?>
+											echo $menu;
+
+											?>
+										</div>
+										<div class="col-sm-6">
+							    			<label for="idNewArtist">New Artist Check</label><span class="error"> <?php echo $newArtistErr;?></span>
+							    			<input type="text" class="form-control" name="idNewArtist" id="idNewArtist" autocomplete="off" value="<?php echo $newArtist; ?>">
+							    			<img class="pull-right" id="tick" src="images/tick.png" width="16" height="16"/>
+											<img class="pull-right" id="cross" src="images/cross.png" width="16" height="16"/>
+							    		</div>
 									</div>
 									<div class="form-group">
-<!-- 							    		<label for="idNewArtist">New Artist</label>
-    									<input type="text" class="form-control" id="idNewArtist" placeholder="Enter New Artist"><span id="info">Exists/Does not exist</span>
-    									<div id="results"></div> -->
-							    	</div>
-							    	<div class="form-group">
-							    		<label for="idNewArtist">New Artist</label>
-							    		<input class="form-control" name="idNewArtist" id="idNewArtist" type="text" autocomplete="off"/>
-										<img id="tick" src="images/tick.png" width="16" height="16"/>
-										<img id="cross" src="images/cross.png" width="16" height="16"/>
-							    	</div>
-						    	</form
+										<div class="col-sm-6">
+											<label class="radio-inline">
+												<input type="radio" name="radioArtist" id="radioArtist1" <?php if (isset($radio) && $radio=="1"){ echo "checked";}?> value="1"> Existing Artist
+											</label>
+											<label class="radio-inline">
+											 	<input type="radio" name="radioArtist" id="radioArtist2" <?php if (isset($radio) && $radio=="2"){ echo "checked";}?> value="2"> New Artist
+											</label>
+											<span class="error1"> * <?php echo $radioErr;?></span>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-success" name="submit-button" id="submit-button">Submit</button>
+									<div class="result"></div>
+						    	</form>
 						    </div>
 						    <div class="modal-footer">
 							    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
