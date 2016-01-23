@@ -9,8 +9,8 @@
 * Add new songs/videos.
  
 ### Future updates
-* Update the knowledge of the person's song when person icons at the bottom are pressed.
 * Auto-suggestion of Artists.
 * Ajax on 'Add Song' form.
 * Search by number of people who know songs.
 * Ajax on 'Show all songs'.
+* ~~Update the knowledge of the person's song when person icons at the bottom are pressed.~~
