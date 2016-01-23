@@ -106,7 +106,35 @@
 				position: absolute;
 				margin-top: -0.1em;
 			}
-				
+
+			.headerLink:link{
+				color: #C95A7B;
+				text-decoration: none;
+			}
+			.headerLink:visited{
+				color: #C95A7B;
+				text-decoration: none;
+			}
+			.headerLink:hover{
+				color: #A04763;
+			  	text-decoration: none;
+			  	text-shadow: 2px 2px white;
+			}
+			.headerLink:active{
+				color: #8d3f57;
+			  	text-decoration: none;
+			  	text-shadow: 2px 2px white;
+			}
+			#knowVidOut{
+				margin-bottom: 0;
+			}
+			#knowVidOut input:focus {
+			 outline:0 !important; 
+			}
+			.dontKnow{
+				-webkit-filter: blur(0.7px) grayscale(100%) opacity(50%); /* Chrome, Safari, Opera */
+    			filter: blur(0.7px) grayscale(100%) opacity(50%);
+			}
 
 		</style>
 	</head>
@@ -148,8 +176,8 @@
 					$url = $row['SongURL'];
 					if($availId == 1){
 						echo 
-						"<h2>". $row['ArtistArtist']." - ".ucwords($row['SongName']) . 
-							" <a href='". $row['SongURL']."' target='_blank' class='btn btn-primary' role='button' data-toggle='tooltip' data-placement='top' title='Open video in new tab'>
+						"<h2><a class='headerLink' href='?nameOfArtistSearch=". $row['ArtistArtist']."' data-toggle='tooltip' data-placement='top' title='More from ". $row['ArtistArtist']."'>". $row['ArtistArtist']."</a> - ".ucwords($row['SongName']) . 
+							" <a href='". $row['SongURL']."' target='_blank' class='btn btn-primary' role='button' data-toggle='tooltip' data-placement='right' title='Open video in new tab'>
 								<span class='glyphicon glyphicon-new-window'>
 								</span>
 							</a>
@@ -239,101 +267,13 @@
 			  <?php } ?>
 			</nav>
 			
-			 <!-- action="knowVid.php?id=<?php  ?>"  -->
-
-			<form id="frmKnowVid" name="frmKnowVid"method='POST'> 
-				<a class="btn btn-primary" role="button" data-toggle="collapse" data-target="#collapseExample">
+			<a class="btn btn-primary" role="button" data-toggle="collapse" data-target="#collapseExample">
 			  All Songs
 			</a>
 			<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1">
 			  Search
-
 			</button>
-				<label class= "hidden-xs hidden-sm"for="btnChris"> I Know This! - </label>
-			    <button type="submit" name="btnChris" id="btnChris" class="btn btn-success hidden-xs hidden-sm"></span>Christian</button>
-			    <button type="submit" name="btnBen" id="btnBen" class="btn btn-primary hidden-xs hidden-sm" ></span>Benjamin</button>
-			    <button type="submit" name="btnMyriah" id="btnMyriah" class="btn btn-info hidden-xs hidden-sm"></span>Myriah</button>
-			    <button type="submit" name="btnRoxanne" id="btnRoxanne" class="btn btn-danger hidden-xs hidden-sm"></span>Roxanne</button>
-			    <button type="submit" name="btnGilbert" id="btnGilbert" class="btn btn-warning hidden-xs hidden-sm"></span>Gilbert</button>
-			</form>
-			<script type="text/javascript">
-			$("#frmKnowVid").submit(function() {
 
-		        var url = "knowVid.php?id=<?php echo $addressId ?>"; // the script where you handle the form input.
-
-		        $.ajax({
-		               type: "POST",
-		               url: url,
-		          	data: new FormData( this ),
-		      	processData: false,
-		     	contentType: false,
-		                dataType: "html", //expect html to be returned                
-		                success: function (response) {
-		                	$("#knowVidOut").html(response);
-		                	$('[data-toggle="tooltip"]').tooltip();   
-		                }
-		             });
-
-		        return false; // avoid to execute the actual submit of the form.
-		    });
-			</script>
-
-			<?php 
-
-			// action="knowVid.php?id=<?php echo $addressId 
-			
-			// if(isset($_POST['btnChris'])){
-			// 	$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (1,%s)",mysql_real_escape_string($addressId));
-			// 	$sqlChrisQ = mysql_query($sqlChris);
-			// 	if($sqlChrisQ){
-			// 		echo "Added";
-			// 	}else {
-			// 		echo "You already know this!";
-			// 	}
-
-			// }
-
-			// if(isset($_POST['btnBen'])){
-			// 	$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (4,%s)",mysql_real_escape_string($addressId));
-			// 	$sqlChrisQ = mysql_query($sqlChris);
-			// 	if($sqlChrisQ){
-			// 		echo "Added";
-			// 	}else {
-			// 		echo "You already know this!";
-			// 	}
-			// }
-
-			// if(isset($_POST['btnMyriah'])){
-			// 	$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (2,%s)",mysql_real_escape_string($addressId));
-			// 	$sqlChrisQ = mysql_query($sqlChris);
-			// 	if($sqlChrisQ){
-			// 		echo "Added";
-			// 	}else {
-			// 		echo "You already know this!";
-			// 	}
-			// }
-
-			// if(isset($_POST['btnRoxanne'])){
-			// 	$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (3,%s)",mysql_real_escape_string($addressId));
-			// 	$sqlChrisQ = mysql_query($sqlChris);
-			// 	if($sqlChrisQ){
-			// 		echo "Added";
-			// 	}else {
-			// 		echo "You already know this!";
-			// 	}
-			// }
-
-			// if(isset($_POST['btnGilbert'])){
-			// 	$sqlChris = sprintf("INSERT INTO `PersonSong`(`Person_Id`, `Song_Id`) VALUES (5,%s)",mysql_real_escape_string($addressId));
-			// 	$sqlChrisQ = mysql_query($sqlChris);
-			// 	if($sqlChrisQ){
-			// 		echo "Added";
-			// 	}else {
-			// 		echo "You already know this!";
-			// 	}
-			// }
-
-			?>
 
 			<?php
 			$sqlAll = mysql_query("SELECT Song.Song_Id AS SongId, Song.Song_Name AS SongName, Artist.Artist As ArtistArtist, Song.Url AS SongURL FROM Song INNER JOIN Artist On Song.Artist_Id=Artist.Artist_Id ORDER By ArtistArtist");
@@ -483,7 +423,11 @@
 				<h3></h3>
 				<div class="panel">
 					<div class="panel-heading">
-						<h3 class="panel-title">Search Results for "<?php echo $term?>"</h3>
+						<h3 class="panel-title">
+							<div class="alert alert-info">
+								Search Results for <b>"<?php echo $term?>"</b>
+							</div>
+						</h3>
 					</div>
 					<table class="table table-hover table-striped">
 						<tr>
@@ -500,14 +444,6 @@
 						    <tr>
 						        <td><?php echo $rowSongName['ArtistArtist']; ?></td>
 						        <td><?php echo ucwords($rowSongName['SongName']); ?></td>
-	<!-- 					        <td>
-						        	<div>
-						        		<a href="?id=<?php print $rowSongName['SongId'] ?> "class='btn btn-primary' role='button'>
-											<span class='glyphicon glyphicon-play-circle'>
-											</span>
-										</a>
-									</div>
-								</td> -->
 								<td>
 									<?php 
 									$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$rowSongName['SongId']."'"); ?>
@@ -542,7 +478,11 @@
 				<h3></h3>
 				<div class="panel">
 					<div class="panel-heading">
-						<h3 class="panel-title">Search Results for "<?php echo $term?>"</h3>
+						<h3 class="panel-title">
+							<div class="alert alert-info">
+								Search Results for <b>"<?php echo $term?>"</b>
+							</div>
+						</h3>
 					</div>
 					<table class="table table-striped table-hover">
 						<tr>
@@ -660,15 +600,34 @@
 				if (isset($_GET["id"])){
 						$_GET["id"] = $_GET["id"];
 					}
-				$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$_GET["id"]."'"); ?>
-				<div id="knowVidOut" class="navbar-header">
+				$sqlPersonSong = mysql_query("SELECT
+											  Person.Person_Id AS PersonID,
+											  Person.Name AS PersonName,
+											  PersonSong.Song_Id AS SongID,
+											  Person.Facebook_Id AS FacebookID
+											FROM
+											  Person
+											LEFT JOIN
+											  PersonSong ON Person.Person_Id = PersonSong.Person_Id AND PersonSong.Song_Id = ".$_GET["id"].""); ?>				
+
+				<!--$sqlPersonSong = mysql_query("SELECT Person.Name AS PersonName, PersonSong.Person_Id AS PersonID, PersonSong.Song_Id AS SongID, Person.Facebook_Id AS FacebookID FROM PersonSong INNER JOIN Person ON PersonSong.Person_Id=Person.Person_Id WHERE PersonSong.Song_Id ='".$_GET["id"]."'");  -->
+
+				<form id="knowVidOut" class="navbar-header">
 					<?php 
 					$numRows = 1;
-					while($rowLanguageName = mysql_fetch_array($sqlPersonSong)) { ?>
-					<a class="navbar-brand " href="#">
-						<img class="circleImage img-circle" alt="Brand" src="http://graph.facebook.com/<?php print $rowLanguageName['FacebookID'] ?>/picture?type=square&width=200&height=200" 
-						data-toggle='tooltip' data-placement='top' title='<?php print $rowLanguageName['PersonName'] ?>'>
-					</a>
+					while($rowLanguageName = mysql_fetch_array($sqlPersonSong)) {
+						$facebookImage = "http://graph.facebook.com/".$rowLanguageName['FacebookID']."/picture?type=square&width=200&height=200";
+
+						if(!is_null($rowLanguageName['SongID'])){
+							$dontKnowCSS = "";
+						}else{
+							$dontKnowCSS = "dontKnow";
+						}
+						?>
+					<div class="navbar-brand ">
+						<input name='person<?php echo $rowLanguageName['PersonID'] ?>' id='person<?php echo $rowLanguageName['PersonID'] ?>' type="image" value="submit" class="<?php echo $dontKnowCSS ?> circleImage img-circle" alt="Brand" src='<?php echo $facebookImage ?>' 
+						data-toggle='tooltip' data-placement='top' title='<?php echo $rowLanguageName['PersonName'] ?>'/>
+					</div>
 
 					<?php 
 					$numRows++;
@@ -682,7 +641,28 @@
 							</a>";
 					}
 					?>
-				</div>
+				</form>
+				<script type="text/javascript">
+				$("#knowVidOut").submit(function() {
+
+			        var url = "knowVid.php?id=<?php echo $addressId ?>"; // the script where you handle the form input.
+
+			        $.ajax({
+			               type: "POST",
+			               url: url,
+			          	data: new FormData( this ),
+			      	processData: false,
+			     	contentType: false,
+			                dataType: "html", //expect html to be returned                
+			                success: function (response) {
+			                	$("#knowVidOut").html(response);
+			                	$('[data-toggle="tooltip"]').tooltip();   
+			                }
+			             });
+
+			        return false; // avoid to execute the actual submit of the form.
+			    });
+				</script>
 				<?php if($availId == 1){
 					echo 
 					"<p class='navbar-text hidden-xs hidden-sm'>". $row['ArtistArtist']." - ".ucwords($row['SongName'])."</p>";
